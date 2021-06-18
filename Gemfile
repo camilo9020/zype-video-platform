@@ -24,6 +24,10 @@ gem 'enumerize'
 
 gem 'bootstrap', '~> 5.0.1'
 
+gem 'httparty'
+
+gem 'pry', '~> 0.13.1'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
