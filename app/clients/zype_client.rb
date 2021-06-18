@@ -12,7 +12,7 @@ class ZypeClient
     end
 
     def refresh_access_token(email)
-      response = HTTParty.post(@base_oauth_url + 'token' body: build_body(email, 'refresh_token'), headers: headers)
+      response = HTTParty.post(@base_oauth_url + 'token', body: build_body(email, 'refresh_token'), headers: headers)
       JSON.parse(response.body)
     end
 
