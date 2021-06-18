@@ -8,10 +8,10 @@
 
 
 videoExamples = [
-    { title: 'Zype Playout Demo', link: 'https://www.youtube.com/watch?v=gawU9syyhT8', video_type: 'free' },
-    { title: 'Zype Overview', link: 'https://www.youtube.com/watch?v=rPc7RPS-KEs', video_type: 'free' },
-    { title: 'Zype Playout Showcase (featuring Vevo)', link: 'https://www.youtube.com/watch?v=BaUOCKUjk0U', video_type: 'free' },
-    { title: 'Import & Upload Videos in the Zype Platform', link: 'https://www.youtube.com/watch?v=hakEa95vPgk', video_type: 'free' }
+    { title: 'Zype Playout Demo', link: 'https://www.youtube.com/embed/gawU9syyhT8', video_type: 'free' },
+    { title: 'Zype Overview', link: 'https://www.youtube.com/embed/rPc7RPS-KEs', video_type: 'free' },
+    { title: 'Zype Playout Showcase (featuring Vevo)', link: 'https://www.youtube.com/embed/BaUOCKUjk0U', video_type: 'premium' },
+    { title: 'Import & Upload Videos in the Zype Platform', link: 'https://www.youtube.com/embed/hakEa95vPgk', video_type: 'premium' }
 ]
 
 Video.create(videoExamples)
