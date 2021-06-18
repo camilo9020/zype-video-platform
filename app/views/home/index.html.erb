@@ -4,10 +4,10 @@
     <div class="row">
         <% @videos.each do |video| %>
         <div class="card" style="width: 36rem;">
-            <iframe src='<%= video.link%>' frameborder='0' allowfullscreen class="<%= allow_reproduce(video) ? '' : 'noClick'%>"></iframe>
+            <iframe src='<%= get_video_link(video) %>' frameborder='0' allowfullscreen class="<%= allow_reproduce(video) ? '' : 'noClick'%>"></iframe>
             <div class="card-body">
-                <h5 class="card-title"><%= link_to "#{video.title}", get_video_link(video) %></h5>
-                <%= "<span class='badge bg-secondary'>Premium</span>".html_safe if video.video_type == 'premium' %>
+                <h5 class="card-title"><%= link_to "#{ video["title"]}", get_video_link(video) %></h5>
+                <%= "<span class='badge bg-secondary'>Premium</span>".html_safe if video["purchase_required"] %>
             </div>
         </div>
         <% end %>

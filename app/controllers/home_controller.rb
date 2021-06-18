@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
+
   def index
-    @videos = Video.all.order(created_at: :desc)
+    client = ZypeClient.new
+    @videos = client.get_videos["response"]
   end
 end

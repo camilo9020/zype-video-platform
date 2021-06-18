@@ -1,14 +1,14 @@
 module HomeHelper
     def get_video_link(video)
-        if video.video_type == 'premium'
-            user_signed_in? ? video.link : new_user_session_path
+        if video["purchase_required"]
+            user_signed_in? ? 'https://www.youtube.com/embed/' + video["youtube_id"] : new_user_session_path
         else
-            video.link
+            'https://www.youtube.com/embed/' + video["youtube_id"]
         end
     end
 
     def allow_reproduce(video)
-        if video.video_type == 'premium'
+        if video["purchase_required"]
             user_signed_in? ? true : false
         else
             true
