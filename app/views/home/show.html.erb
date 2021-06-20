@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="card" style="width: 72rem;">
+      <div class="card-body">
+        <% if @video[:subscription_required] %>
+        <iframe src="https://player.zype.com/embed/<%= @video[:id] %>.html?access_token=accessTokenToReplace" class="premium-iframe"></iframe>
+        <% else %>
+        <iframe src="https://player.zype.com/embed/<%= @video[:id] %>.html?api_key=<%= ENV["PLAYER_KEY"] %>"></iframe>
+        <%#= "<span class='badge bg-secondary'>Premium</span>".html_safe if video["purchase_required"] %>
+        <% end %>
+        <h5 class="card-title"><%= @video[:title] %></h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if ($('#sessionData').attr('data-access-token')) {
+    accessToken = $('#sessionData').attr('data-access-token').replaceAll("\"", "").replaceAll("\\", "")
+    localStorage.setItem('access_token', $('#sessionData').attr('data-access-token').replaceAll("\"", "").replaceAll("\\", ""))
+    localStorage.setItem('expiresIn',$('#sessionData').attr('data-expires-in').replaceAll("\"", ""))
+    localStorage.setItem('email', $('#sessionData').attr('data-email').replaceAll("\"", ""))
+  }
+  if ( $('.premium-iframe').attr('src')) {
+    let src = $('.premium-iframe').attr('src')
+    const accessToken = localStorage.getItem('access_token')
+    $('.premium-iframe').attr('src', src.replace("accessTokenToReplace", accessToken.replaceAll("\"", "")))
+  }
+</script>

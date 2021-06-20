@@ -2,7 +2,7 @@ class ZypeClient
     include HTTParty
 
     def initialize
-      @base_url = 'https://api.zype.com/videos?app_key='
+      @base_url = 'https://api.zype.com/videos'
       @base_oauth_url = 'https://login.zype.com/oauth/'
     end
 
@@ -28,11 +28,21 @@ class ZypeClient
 
     def get_videos
         response = begin
-          HTTParty.get(@base_url + ENV['APP_KEY'])
+          HTTParty.get(@base_url + "?app_key=" + ENV['APP_KEY'])
         rescue Timeout::Error
           nil
         end
         response.nil? ? response : JSON.parse(response.body)
+    end
+
+    def check_video_entitlement(videoId)
+      pathComplement = "/#{videoId}/entitled?api_key=#{ENV['APP_KEY']}"
+      response = begin
+      HTTParty.get(@base_url + pathComplement)
+      rescue Timeout::Error
+        nil
+      end
+      response.nil? ? response : JSON.parse(response.body)
     end
 
     private

@@ -3,17 +3,47 @@
   <head>
     <title>ZypeVideoPlatform</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
+    <span id="sessionData" data-access-token="<%= @session.accessToken if @session %>" data-expires-in="<%= @session.expiresIn.time if @session %>" data-session="<%= @session ? true : false %>" data-email="<%= @session.email if @session %>"></span>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
+    <script>
+      if ($('#sessionData').attr('data-session') == "true") {
+        accessToken = $('#sessionData').attr('data-access-token').replaceAll("\"", "").replaceAll("\\", "")
+        localStorage.setItem('access_token', $('#sessionData').attr('data-access-token').replaceAll("\"", "").replaceAll("\\", ""))
+        localStorage.setItem('expiresIn',$('#sessionData').attr('data-expires-in').replaceAll("\"", ""))
+        localStorage.setItem('email', $('#sessionData').attr('data-email').replaceAll("\"", ""))
+        this.replaceToken(accessToken)
+      }
+
+      accessToken = localStorage.getItem('access_token')
+      expiresIn = new Date(localStorage.getItem('expiresIn'))
+      today = new Date();
+
+      if (accessToken && (today < expiresIn)) {
+        $('.signin-link').hide()
+        $('.signed-email').text(localStorage.getItem('email').replaceAll("\"", ""))
+        $('.signed-email').show()
+        $('#sessionData').attr('data-access-token', accessToken)
+        this.replaceToken(accessToken)
+      }
+
+      function replaceToken(accessToken) {
+        src = $('.linkToVideo').attr('href')
+        if (src) {
+          $('.linkToVideo').attr('href', src.replace("accessTokenToReplace", accessToken))
+        }
+        $.param({ accessToken })
+      }
+    </script>
   </body>
 </html>
