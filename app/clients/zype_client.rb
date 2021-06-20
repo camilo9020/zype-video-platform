@@ -8,7 +8,7 @@ class ZypeClient
 
     def get_access_token(email, password)
       response = HTTParty.post(@base_oauth_url + 'token', body: build_body(email, password, 'password'), headers: headers)
-      JSON.parse(mock_response)
+      JSON.parse(response.body)
     end
 
     def refresh_access_token(email)
@@ -50,17 +50,6 @@ class ZypeClient
     def headers
       { "Content-Type" => "application/json",
       "Accept" => "application/json" }
-    end
-
-    def mock_response
-      {
-        "access_token": "8c8d7bee5e2de29c78f211354d7ba02880b3e1061df99016ae8b9ea9695bcc09",
-        "token_type": "Bearer",
-        "expires_in": 604800,
-        "refresh_token": "6fcc095b8baf6186c72a421ebe2d90fcf92fa7007565bce6ef26a3cc70211b64",
-        "scope": "consumer",
-        "created_at": 1624201737
-    }.to_json
     end
 
     def build_body(email, password, grantTypeKey)
